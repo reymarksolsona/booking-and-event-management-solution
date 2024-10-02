@@ -1,0 +1,19 @@
+.wrapper {
+    display: flex;
+    align-items: stretch;
+    min-width: 100%;
+    min-height: calc(100vh - var(--header-h));
+    max-height: calc(100vh - var(--header-h));
+}
+
+.wrapper.hidden-header {
+  max-height: 100vh;
+}
+
+#content {
+    flex-grow: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 100%;
+    padding: 30px;
+}
