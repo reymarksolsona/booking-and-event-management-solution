@@ -32,6 +32,7 @@ export class CalendarComponent {
 
     CalendarView = CalendarView;
 
+    inlineDatePicker: Date = new Date();
     viewDate: Date = new Date();
 
     modalData!: {

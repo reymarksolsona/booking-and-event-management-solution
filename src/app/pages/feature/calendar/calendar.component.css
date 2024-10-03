@@ -26,3 +26,28 @@ pre {
 .active {
     background-color: #2a6840;
 }
+
+.list-group-item {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.calendar-section {
+    margin-top: 72px
+}
+
+.my-calendar {
+    text-decoration: none;
+    color: #000;
+}
+
+.list-group-item:hover {
+    color:#378251;
+}
+
+.inline-flatpickr .form-control,
+    .flatpickr-calendar.arrowTop:before,
+    .flatpickr-calendar.arrowTop:after {
+        display: none !important;
+}
