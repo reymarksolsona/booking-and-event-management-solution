@@ -1,0 +1,28 @@
+h3 {
+    margin: 0 0 10px;
+}
+
+pre {
+    background-color: #f5f5f5;
+    padding: 15px;
+}
+
+.btn {
+    border-color: #2a6840;
+}
+
+.btn:active {
+    background-color: #2a6840;
+}
+
+.btn:hover {
+    border-color: #2a6840;
+}
+
+.btn-primary {
+    background-color: #378251;
+}
+
+.active {
+    background-color: #2a6840;
+}

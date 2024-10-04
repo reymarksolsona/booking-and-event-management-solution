@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CalendarComponent } from './pages/feature/calendar/calendar.component';
 import { HeaderComponent } from './pages/shared/layout/header/header.component';
 import { SidebarComponent } from './pages/shared/layout/sidebar/sidebar.component';
+import { CalendarViewComponent } from './pages/shared/common/calendar-view/calendar-view.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -24,7 +25,8 @@ export function momentAdapterFactory() {
     AppComponent,
     HeaderComponent,
     SidebarComponent,
-    CalendarComponent
+    CalendarComponent,
+    CalendarViewComponent
   ],
   imports: [
     BrowserModule,
