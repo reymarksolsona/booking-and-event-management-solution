@@ -1,18 +1,33 @@
-<div class="sidebar">
+<div [ngClass]="{'sidebar': !navbarClosed, 'sidebar-collapse': navbarClosed}">
+  <div class="d-flex flex-row-reverse">
+    <i class="bi bi-list fs-3 me-2 menu-icon" (click)="toggleNav()"></i>
+  </div>
   <hr>
   <ul class="nav flex-column">
       <li class="nav-item">
-          <a class="nav-link active" routerLink="calendar">Calendar</a>
+          <a class="nav-link" routerLinkActive="active-link" routerLink="calendar">
+            <i class="bi bi-calendar-day"></i> 
+            <span>Calendar</span>
+        </a>
       </li>
       <li class="nav-item">
-          <a class="nav-link" routerLink="events">Events</a>
+          <a class="nav-link" routerLinkActive="active-link" routerLink="events">
+            <i class="bi bi-calendar-event"></i> 
+            <span>Events</span>
+        </a>
       </li>
       <li class="nav-item">
-          <a class="nav-link" routerLink="my-profile">My Profile</a>
+          <a class="nav-link" routerLinkActive="active-link" routerLink="my-profile">
+            <i class="bi bi-person-circle"></i> 
+            <span>My Profile</span>
+        </a>
       </li>
       <hr>
       <li class="nav-item">
-          <a class="nav-link" href="#">Logout</a>
+          <a class="nav-link" href="#">
+            <i class="bi bi-box-arrow-left"></i> 
+            <span>Logout</span>
+        </a>
       </li>
   </ul>
 </div>

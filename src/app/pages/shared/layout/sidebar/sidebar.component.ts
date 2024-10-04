@@ -50,6 +50,7 @@ public ngOnDestroy(): void {
 
 public toggleNav(): void {
     //this.sidebarService.toggleSideBar(!this.navbarClosed);
+    this.navbarClosed = !this.navbarClosed;
 }
 
 public toggleNavItem(item: string): void {
@@ -114,20 +115,6 @@ public toggleNavSubItem(item: string): void {
     }
 }
 
-public toggleNavSubItem2(item: string): void {
-    if (this.navbarClosed) {
-        this.toggleNav();
-    }
-
-    switch (item) {
-        case "Validation Report" : {
-            this.changeNavSubItemState2(0);
-            break;
-        }
-       
-    }
-}
-
 public checkIfMainFacilitiesSubitemsIsActive(item: string): boolean {
     let result: boolean = false;
     this.mainFacilitiesSubItems.find((navItem) => {
@@ -170,15 +157,6 @@ private changeNavState(index: number) {
 
 private changeNavSubItemState(index: number) {
     this.mainFacilitiesSubItems = this.mainFacilitiesSubItems.map((item, itemIndex) => {
-        index === itemIndex
-          ? (item.isActive = !item.isActive)
-          : (item.isActive = false);
-        return item;
-    });
-}
-
-private changeNavSubItemState2(index: number) {
-    this.mainFacilitiesSubItems2 = this.mainFacilitiesSubItems2.map((item, itemIndex) => {
         index === itemIndex
           ? (item.isActive = !item.isActive)
           : (item.isActive = false);
