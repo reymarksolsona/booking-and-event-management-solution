@@ -38,3 +38,11 @@
     max-height: 80vh;
     overflow-y: auto;
 }
+
+#bookableSpace ul li {
+    font-size: small;
+}
+
+#events ul li {
+    font-size: small;
+}

@@ -1,35 +1,92 @@
 <div class="row">
-    <div class="col-md-2">
-        <div class="container-fluid calendar-section">
-            <p>
-                <a class="my-calendar" data-bs-toggle="collapse" href="#myCalendars" aria-expanded="false" aria-controls="myCalendars" (click)="toggleMyCalendar()">
-                    <i class="bi" [ngClass]="{ 'bi-chevron-right': !isMyCalendarCollapsed, 'bi-chevron-down text-success': isMyCalendarCollapsed }"></i> My Calendars </a>
-            </p>
-            <div class="row">
-                <div class="col">
-                    <div class="collapse multi-collapse" id="myCalendars">
-                        <ul class="list-group">
-                            <li class="list-group-item" (click)="toggleCalendar('myCalendar')">
-                                <i class="bi bi-check-circle-fill" [ngClass]="{ 'text-success': isCalendarActive('myCalendar') }"></i> Calendar
-                            </li>
-                            <li class="list-group-item" (click)="toggleCalendar('usHolidays')">
-                                <i class="bi bi-check-circle-fill" [ngClass]="{ 'text-success': isCalendarActive('usHolidays') }"></i> United States holidays
-                            </li>
-                            <li class="list-group-item" (click)="toggleCalendar('birthdays')">
-                                <i class="bi bi-check-circle-fill" [ngClass]="{ 'text-success': isCalendarActive('birthdays') }"></i> Birthdays
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+    <div class="col-md-2" style="background-color: #d7e6dc;margin-top: 150px;">
+      <div class="container-fluid calendar-section">
+        <!-- Bookable Space Section -->
+        <p><b>
+          <a class="text-success my-calendar" data-bs-toggle="collapse" href="#bookableSpace" aria-expanded="false" aria-controls="bookableSpace" (click)="toggleBookableSpace()">
+            <i class="bi" [ngClass]="{ 'bi-chevron-right': !isBookableSpaceCollapsed, 'bi-chevron-down text-success': isBookableSpaceCollapsed }"></i> Bookable Space
+          </a></b>
+        </p>
+        <div class="row">
+          <div class="col">
+            <div class="collapse multi-collapse" id="bookableSpace">
+              <ul class="list-group">
+                <li class="list-group-item text-success" (click)="openModal('Bookable Space')" >
+                  <i class="bi bi-calendar-plus"></i> Add Event
+                </li>
+                <li class="list-group-item ms-3" *ngFor="let event of myCalendarEvents">
+                    <i class="bi bi-check-circle-fill"></i> {{event.title}}
+                </li>
+              </ul>
             </div>
+          </div>
         </div>
+        
+        <!-- Events Section -->
+        <p class="mt-2"><b>
+          <a class="text-success my-calendar" data-bs-toggle="collapse" href="#events" aria-expanded="false" aria-controls="events" (click)="toggleEvents()">
+            <i class="bi" [ngClass]="{ 'bi-chevron-right': !isEventsCollapsed, 'bi-chevron-down text-success': isEventsCollapsed }"></i> Events
+          </a></b>
+        </p>
+        <div class="row">
+          <div class="col">
+            <div class="collapse multi-collapse" id="events">
+              <ul class="list-group">
+                <li class="list-group-item text-success" (click)="openModal('Events')" >
+                  <i class="bi bi-calendar-plus"></i> Add Event
+                </li>
+                <li class="list-group-item ms-3" *ngFor="let event of eventsCalendarEvents">
+                    <i class="bi bi-check-circle-fill"></i> {{event.title}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  
     <div class="col-md-10 calendar-view">
-        <div *ngFor="let calendar of selectedCalendars">
-            <h3 class="mt-5 mb-3 text-success">
-                <b>{{ calendar.displayString }}</b>
-            </h3>
-            <app-calendar-view [viewDate]="viewDate" [events]="calendar.events" [actions]="actions" class="responsive-calendar"></app-calendar-view>
-        </div>
+      <div>
+        <h3 class="mt-5 mb-3 text-success">
+        </h3>
+        <app-calendar-view [viewDate]="viewDate" [events]="events" [actions]="actions" class="responsive-calendar"></app-calendar-view>
+      </div>
     </div>
-</div>
+  
+    <!-- Modal for Adding Events -->
+    <ng-template #modalContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title">Add New Event</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <form #eventForm="ngForm">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" [(ngModel)]="newEvent.title" name="title" required />
+          </div>
+          <div class="mb-3">
+            <label for="startDateTime" class="form-label">Start Date/Time</label>
+            <input type="datetime-local" class="form-control" id="startDateTime" [(ngModel)]="newEvent.start" name="startDateTime" required />
+          </div>
+          <div class="mb-3">
+            <label for="endDateTime" class="form-label">End Date/Time</label>
+            <input type="datetime-local" class="form-control" id="endDateTime" [(ngModel)]="newEvent.end" name="endDateTime" required />
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" [(ngModel)]="newEvent.description" name="description" rows="3"></textarea>
+          </div>
+          <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" id="recurring" [(ngModel)]="newEvent.recurring" name="recurring" />
+            <label for="recurring" class="form-check-label">Recurring Event</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" style="background-color: #378251; border: 1px solid #378251;" (click)="saveEvent()">Save</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cancel click')">Cancel</button>
+      </div>
+    </ng-template>
+  </div>
+  

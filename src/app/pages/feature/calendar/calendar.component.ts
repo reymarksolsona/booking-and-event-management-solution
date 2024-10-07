@@ -1,15 +1,8 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CalendarView, CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent } from 'angular-calendar';
-import { startOfDay, isSameMonth, isSameDay } from 'date-fns';
+import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { Subject } from 'rxjs';
-import { EventColor } from 'calendar-utils';
-
-const colors: Record<string, EventColor> = {
-  red: { primary: '#ad2121', secondary: '#FAE3E3' },
-  blue: { primary: '#1e90ff', secondary: '#D1E8FF' },
-  yellow: { primary: '#e3bc08', secondary: '#FDF1BA' },
-};
+import { startOfDay } from 'date-fns';
 
 @Component({
   selector: 'app-calendar',
@@ -19,120 +12,230 @@ const colors: Record<string, EventColor> = {
 export class CalendarComponent {
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
   
-  view: CalendarView = CalendarView.Month;
   viewDate: Date = new Date();
-  activeDayIsOpen: boolean = true;
-  modalData!: { action: string; event: CalendarEvent };
+  refresh = new Subject<void>();
+  
+  newEvent: any = {
+    title: '',
+    start: '',
+    end: '',
+    description: '',
+    recurring: false,
+    category: ''
+  };
 
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.handleEvent('Edited', event);
       },
     },
     {
       label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.deleteEvent(event);
       },
     },
   ];
-
-  refresh = new Subject<void>();
   myCalendarEvents: CalendarEvent[] = [
-    { start: startOfDay(new Date()), title: 'My Calendar Event', color: colors['red'], actions: this.actions },
-  ];
-  usHolidaysEvents: CalendarEvent[] = [
-    { start: startOfDay(new Date()), title: 'Independence Day', color: colors['blue'], actions: this.actions },
-  ];
-  birthdaysEvents: CalendarEvent[] = [
-    { start: startOfDay(new Date()), title: 'Friend’s Birthday', color: colors['yellow'], actions: this.actions },
-  ];
-
-  // Holds selected calendars
-  selectedCalendars: { calendarName: string; displayString: string; events: CalendarEvent[] }[] = [];
-  isMyCalendarCollapsed: boolean = false;
-  activeCalendar: string = 'myCalendar';
-
-  constructor(private modal: NgbModal) {
-    this.selectedCalendars.push({ calendarName: 'myCalendar',displayString: 'My Calendar', events: this.myCalendarEvents });
-  }
-
-  toggleMyCalendar() {
-    this.isMyCalendarCollapsed = !this.isMyCalendarCollapsed;
-  }
-
-  toggleCalendar(calendarType: string): void {
-    const index = this.selectedCalendars.findIndex(c => c.calendarName === calendarType);
-    let calendarName: string = '';
-    if (index > -1) {
-      // Remove the calendar if already selected
-      this.selectedCalendars.splice(index, 1);
-    } else {
-      // Add the selected calendar to the view
-      let events: CalendarEvent[];
-      switch (calendarType) {
-        case 'myCalendar':
-          events = this.myCalendarEvents;
-          calendarName = 'My Calendar';
-          break;
-        case 'usHolidays':
-          events = this.usHolidaysEvents;
-            calendarName = 'US Holidays';
-          break;
-        case 'birthdays':
-          events = this.birthdaysEvents;
-            calendarName = 'Birthdays';
-          break;
-        default:
-          return; // Early return if not a valid calendarType
+    {
+      title: 'Cecil Plains Library',
+      start: startOfDay(new Date('2024-10-10')),
+      end: startOfDay(new Date('2024-10-12')),
+      color: { primary: '#1e90ff', secondary: '#D1E8FF' },
+      actions: this.actions,
+      allDay: true,
+      meta: {
+        description: 'This is my first event',
+        recurring: false
       }
-      this.selectedCalendars.push({ calendarName: calendarType, displayString: calendarName, events });
+    },
+    {
+      title: 'Clifton - Elsie Jones park',
+      start: startOfDay(new Date('2024-10-15')),
+      end: startOfDay(new Date('2024-10-16')),
+      color: { primary: '#1e90ff', secondary: '#D1E8FF' },
+      actions: this.actions,
+      allDay: true,
+      meta: {
+        description: 'This is my second event',
+        recurring: false
+      }
+    },
+    {
+      title: 'Cooyar - Swinging Bridge park',
+      start: startOfDay(new Date('2024-10-15')),
+      end: startOfDay(new Date('2024-10-16')),
+      color: { primary: '#1e90ff', secondary: '#D1E8FF' },
+      actions: this.actions,
+      allDay: true,
+      meta: {
+        description: 'This is my third event',
+        recurring: false
+      }
+    },
+    {
+      title: 'Highfields Cultural Centre',
+      start: startOfDay(new Date('2024-10-15')),
+      end: startOfDay(new Date('2024-10-16')),
+      color: { primary: '#1e90ff', secondary: '#D1E8FF' },
+      actions: this.actions,
+      allDay: true,
+      meta: {
+        description: 'This is my fourth event',
+        recurring: false
+      }
+    },
+    {
+      title: 'Empire Theatre',
+      start: startOfDay(new Date('2024-10-15')),
+      end: startOfDay(new Date('2024-10-16')),
+      color: { primary: '#1e90ff', secondary: '#D1E8FF' },
+      actions: this.actions,
+      allDay: true,
+      meta: {
+        description: 'This is my fifth event',
+        recurring: false
+      }
     }
-    this.activeCalendar = calendarType;
-    this.refresh.next(); // Refresh the calendar views
+  ];
+
+  eventsCalendarEvents: CalendarEvent[] = [
+    {
+      title: 'Bloom Towoomba - Feminine Self...',
+      start: startOfDay(new Date('2024-10-20')),
+      end: startOfDay(new Date('2024-10-21')),
+      color: { primary: '#ad2121', secondary: '#FAE3E3' },
+      actions: this.actions,
+      allDay: true,
+      meta: {
+        description: 'This is an event',
+        recurring: true
+      }
+    },
+    {
+      title: 'Towoomba, Careers Week Lunch',
+      start: startOfDay(new Date('2024-10-22')),
+      end: startOfDay(new Date('2024-10-23')),
+      color: { primary: '#ad2121', secondary: '#FAE3E3' },
+      actions: this.actions,
+      allDay: true,
+      meta: {
+        description: 'This is another event',
+        recurring: true
+      }
+    }
+  ];
+  events: CalendarEvent[] = [];
+  
+  isBookableSpaceCollapsed: boolean = false;
+  isEventsCollapsed: boolean = false;
+  
+  constructor(private modalService: NgbModal) {}
+  ngOnInit() {
+    this.loadEventsFromLocalStorage();
+  }
+  
+  loadEventsFromLocalStorage() {
+    const bookableSpaceEvents = localStorage.getItem('BookableSpaceEvents');
+    if (bookableSpaceEvents) {
+      this.myCalendarEvents = JSON.parse(bookableSpaceEvents).map((event:any) => ({
+        ...event,
+        start: new Date(event.start), // Convert to Date object
+        end: new Date(event.end)      // Convert to Date object
+      }));
+      this.events = this.myCalendarEvents;
+    }
+  
+    // Load Events Calendar Events
+    const eventsCalendarEvents = localStorage.getItem('EventsCalendarEvents');
+    if (eventsCalendarEvents) {
+      this.eventsCalendarEvents = JSON.parse(eventsCalendarEvents).map((event: any) => ({
+        ...event,
+        start: new Date(event.start), // Convert to Date object
+        end: new Date(event.end)      // Convert to Date object
+      }));
+    }
+  
+    // Combine both events into the events array
+    this.events = [...this.myCalendarEvents, ...this.eventsCalendarEvents];
+  
+    this.refresh.next(); // Refresh the calendar view
+  }
+  
+  toggleBookableSpace() {
+    this.isBookableSpaceCollapsed = !this.isBookableSpaceCollapsed;
+  }
+  
+  toggleEvents() {
+    this.isEventsCollapsed = !this.isEventsCollapsed;
+  }
+
+  openModal(category: string) {
+    this.newEvent.category = category;
+    this.modalService.open(this.modalContent, { size: 'lg' });
+  }
+
+  saveEvent() {
+    // Convert the start and end to Date objects
+    const startDate = new Date(this.newEvent.start);
+    const endDate = new Date(this.newEvent.end);
+  
+    // Check for invalid dates
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      console.error('Invalid date provided');
+      return;
+    }
+  
+    const event: CalendarEvent = {
+      title: this.newEvent.title,
+      start: startDate, // Ensure this is a Date object
+      end: endDate,     // Ensure this is a Date object
+      color: { primary: '#1e90ff', secondary: '#D1E8FF' },
+      actions: this.actions,
+      allDay: false,
+      meta: {
+        description: this.newEvent.description,
+        recurring: this.newEvent.recurring
+      }
+    };
+  
+    if (this.newEvent.category === 'Bookable Space') {
+      this.myCalendarEvents.push(event);
+      this.saveToLocalStorage('BookableSpaceEvents', this.myCalendarEvents);
+    } else if (this.newEvent.category === 'Events') {
+      this.eventsCalendarEvents.push(event);
+      this.saveToLocalStorage('EventsCalendarEvents', this.eventsCalendarEvents);
+    }
+  
+    this.refresh.next(); // Refresh the calendar view
+    this.modalService.dismissAll();
+  
+    // Clear the newEvent object for the next input
+    this.newEvent = {
+      title: '',
+      start: '',
+      end: '',
+      description: '',
+      recurring: false,
+      category: ''
+    };
+  }
+  
+
+  saveToLocalStorage(key: string, value: any) {
+    localStorage.setItem(key, JSON.stringify(value));
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
-  }
-
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      this.activeDayIsOpen = (events.length !== 0 && !isSameDay(this.viewDate, date)) ? true : false;
-      this.viewDate = date;
-    }
-  }
-
-  eventTimesChanged({ event, newStart, newEnd }: CalendarEventTimesChangedEvent, events: CalendarEvent[]): void {
-    const updatedEvents = events.map(iEvent => (iEvent === event ? { ...event, start: newStart, end: newEnd } : iEvent));
-    this.selectedCalendars.forEach(calendar => {
-      if (calendar.events.includes(event)) {
-        calendar.events = updatedEvents;
-      }
-    });
-    this.handleEvent('Dropped or resized', event);
+    console.log(action, event);
   }
 
   deleteEvent(eventToDelete: CalendarEvent): void {
-    this.selectedCalendars.forEach(calendar => {
-      calendar.events = calendar.events.filter(event => event !== eventToDelete);
-    });
+    this.myCalendarEvents = this.myCalendarEvents.filter(event => event !== eventToDelete);
+    this.eventsCalendarEvents = this.eventsCalendarEvents.filter(event => event !== eventToDelete);
+    this.saveToLocalStorage('BookableSpaceEvents', this.myCalendarEvents);
+    this.saveToLocalStorage('EventsCalendarEvents', this.eventsCalendarEvents);
   }
-
-  setView(view: CalendarView): void {
-    this.view = view;
-  }
-
-  closeOpenMonthViewDay(): void {
-    this.activeDayIsOpen = false;
-  }
-  isCalendarActive(calendarName: string): boolean {
-    return this.selectedCalendars.some(c => c.calendarName === calendarName);
-  }
-  
 }
