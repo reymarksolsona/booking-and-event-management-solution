@@ -1,3 +1,441 @@
-<p>
-  my-profile works!
-</p>
+<div class="c-body">
+  <div class="row mt-2">
+    <div class="col-lg-12">
+      <div class="d-flex justify-content-start">
+        <p><small>This page captures your personal details which can be used to support event applications</small></p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 pb-3">
+      <div class="card h-100 mb-2 text-center">
+        <div class="card-body">
+          <i  class="bi bi-person-circle default-img card-img-top"></i>
+          <h5 class="card-title">Profile Name</h5>
+          <p class="card-text">
+            <i class="bi bi-envelope-fill text-primary"></i>
+            testuser@sample.com
+          </p>
+          <p class="card-text">
+            <i class="bi bi-geo-fill text-primary"></i>
+            test address
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9 pb-3">
+      <div class="accordion" id="accordionTop">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button personal-information-accordion-btn" type="button" aria-expanded="true"
+              aria-controls="personalInformation" disabled>
+              <span class="badge">
+                <i class="bi bi-check-square-fill text-success"></i>
+                <i *ngIf="!checkIfPersonalInformationSectionComplete()" class="bi bi-x-square-fill text-danger"></i>
+              </span>
+              Personal Information
+            </button>
+          </h2>
+          <div id="personalInformation" class="accordion-collapse collapse show" aria-labelledby="personalInformation"
+            data-bs-parent="#accordionTop">
+            <div class="accordion-body">
+              <p><em>Please enter all required fields to save.</em></p>
+              <form>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row mb-3 form-group required">
+                      <label for="title" class="col-sm-4 col-form-label">Title</label>
+                      <div class="col-sm-8">
+                        <select class="form-select" aria-label="Default select example">
+                          <option selected>Select</option>
+                          <option value="1">Item 1</option>
+                          <option value="2">Item 2</option>
+                          <option value="3">Item 3</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row mb-3 form-group required">
+                      <label for="firstName" class="col-sm-4 col-form-label">First Name</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="firstName"
+                          class="form-control" placeholder="As shown on your passport" id="firstName" required>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="middleName" class="col-sm-4 col-form-label">Middle Name</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="middleName"
+                          class="form-control" placeholder="Middle Name" id="middleName">
+                      </div>
+                    </div>
+                    <div class="row mb-3 form-group required">
+                      <label for="lastName" class="col-sm-4 col-form-label">Last Name</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="lastName"
+                          class="form-control" placeholder="Last Name" id="lastName" required>
+                      </div>
+                    </div>
+                    <div class="row mb-3 form-group required">
+                      <label for="preferredName" class="col-sm-4 col-form-label">Preferred Name</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="preferredName"
+                          class="form-control" placeholder="Enter your preferred name" id="preferredName" required>
+                      </div>
+                    </div>
+                    <div class="row mb-3 form-group required">
+                      <label for="contactType" class="col-sm-4 col-form-label">Contact Type</label>
+                      <div class="col-sm-8">
+                        <select class="form-select" aria-label="Default select example">
+                          <option selected>Select</option>
+                          <option value="1">Item 1</option>
+                          <option value="2">Item 2</option>
+                          <option value="3">Item 3</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="pronouns" class="col-sm-4 col-form-label">Pronouns</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="pronouns"
+                          class="form-control" placeholder="Pronouns" id="pronouns">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="gender" class="col-sm-4 col-form-label">Gender</label>
+                      <div class="col-sm-8">
+                        <select class="form-select" aria-label="Default select example">
+                          <option selected>Select</option>
+                          <option value="1">Item 1</option>
+                          <option value="2">Item 2</option>
+                          <option value="3">Item 3</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row mb-3" *ngIf="showGenderOther()">
+                      <label for="genderOther" class="col-sm-4 col-form-label">Gender Other</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="genderOther"
+                          class="form-control" placeholder="Gender Other" id="genderOther">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="row mb-3 form-group required">
+                      <label for="dateOfbirth" class="col-sm-4 col-form-label">Date of Birth</label>
+                      <div class="col-sm-8 ">
+                        <div class="input-group">
+                          <input type="text" class="form-control" bsDatepicker
+                            placeholder="Date of Birth"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="age" class="col-sm-4 col-form-label">Age <i class="bi bi-lock"></i></label>
+                      <div class="col-sm-8">
+                        <input type="text" name="age"
+                          class="form-control" id="age" disabled>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="occupation" class="col-sm-4 col-form-label">Occupation</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="occupation"
+                          class="form-control" placeholder="Occupation" id="occupation">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="jobTitle" class="col-sm-4 col-form-label">Job Title</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="jobTitle"
+                          class="form-control" placeholder="Job Title" id="jobTitle">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="religiousAffiliation" class="col-sm-4 col-form-label">Religious Affiliation</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="religiousAffiliation"
+                          class="form-control"
+                          placeholder="Religious affiliations" id="religiousAffiliation">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="aboriginal" class="col-sm-4 col-form-label">Are you Aboriginal or Torres Strait
+                        Islander?</label>
+                      <div class="col-sm-8">
+                        <select class="form-select" aria-label="Default select example">
+                          <option selected>Select</option>
+                          <option value="1">Item 1</option>
+                          <option value="2">Item 2</option>
+                          <option value="3">Item 3</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="languageSpoken" class="col-sm-4 col-form-label">Language spoken</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="languageSpoken" class="form-control"
+                          placeholder="List languages you speak separated by a comma" id="languageSpoken">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 pb-3">
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#contactInformation" aria-expanded="false" aria-controls="contactInformation">
+              <span class="badge">
+                <i class="bi bi-check-square-fill text-success"></i>
+                <i *ngIf="!checkIfContactInformationSectionComplete()" class="bi bi-x-square-fill text-danger"></i>
+              </span>
+              Contact Information
+            </button>
+          </h2>
+          <div id="contactInformation" class="accordion-collapse collapse" aria-labelledby="contactInformation"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <p><em>At least one phone number and one email address must be entered to save.</em></p>
+              <form>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row mb-3">
+                      <label for="phoneParticipant" class="col-sm-4 col-form-label">Phone - Profile/Participant</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="phoneParticipant"
+                          class="form-control" id="phoneParticipant" placeholder="Enter your phone number">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="phoneParent1" class="col-sm-4 col-form-label">Phone - Parent 1</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="phoneParent1"
+                          class="form-control" id="phoneParent1" placeholder="Parent 1 phone number">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="phoneParent2" class="col-sm-4 col-form-label">Phone - Parent 2</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="phoneParent2"
+                          class="form-control" id="phoneParent2" placeholder="Parent 2 phone number">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="phoneAlternative" class="col-sm-4 col-form-label">Phone - Alternative</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="phoneAlternative"
+                          class="form-control"
+                          id="phoneAlternative" placeholder="Phone - Alternative">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="row mb-3">
+                      <label for="emailParticipant" class="col-sm-4 col-form-label">Profile/Participant Email</label>
+                      <div class="col-sm-8">
+                        <input type="email" name="emailParticipant"
+                          class="form-control"
+                          id="emailParticipant" placeholder="Youth member/participant's email">
+                      </div>
+                    </div>
+                    <div class="row mb-3" *ngIf="is18orOlder">
+                      <label for="emailParent1" class="col-sm-4 col-form-label">Parent 1 Email</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="emailParent1"
+                          class="form-control" id="emailParent1" placeholder="Parent 1's email address">
+                      </div>
+                    </div>
+                    <div class="row mb-3 form-group required" *ngIf="!is18orOlder">
+                      <label for="emailParent1" class="col-sm-4 col-form-label">Parent 1 Email</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="emailParent1"
+                          class="form-control" id="emailParent1" placeholder="Parent 1's email address">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="emailParent2" class="col-sm-4 col-form-label">Parent 2 Email</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="emailParent2"
+                          class="form-control" id="emailParent2" placeholder="Parent 2's email address">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingFour">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#address"
+              aria-expanded="false" aria-controls="address">
+              <span class="badge">
+                <i  class="bi bi-check-square-fill text-success"></i>
+                <i *ngIf="!checkIfAddressSectionComplete()" class="bi bi-x-square-fill text-danger"></i>
+              </span>
+              Address
+            </button>
+          </h2>
+          <div id="address" class="accordion-collapse collapse" aria-labelledby="address"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <p><em>Please enter your residential address and postal address if different.</em></p>
+              <form>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h5>Physical Address</h5>
+                    <div class="row mb-3">
+                      <label for="address1_line1" class="col-sm-4 col-form-label">Building/Property Name</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="address1_line1"
+                          class="form-control"
+                          id="address1_line1">
+                      </div>
+                    </div>
+                    <div class="row mb-3 form-group required">
+                      <label for="address1_line2" class="col-sm-4 col-form-label text-wrap">Unit/Street Details</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="address1_line2"
+                          class="form-control"
+                          id="address1_line2">
+                      </div>
+                    </div>
+                    <div class="row mb-3 form-group required">
+                      <label for="address1_city" class="col-sm-4 col-form-label">Suburb</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="address1_city" 
+                          class="form-control" id="address1_city">
+                      </div>
+                    </div>
+                    <div class="row mb-3 form-group required">
+                      <label for="xre_residentialaddressstate" class="col-sm-4 col-form-label">State</label>
+                      <div class="col-sm-8">
+                        <select class="form-select" aria-label="Default select example">
+                          <option selected>Select</option>
+                          <option value="1">Item 1</option>
+                          <option value="2">Item 2</option>
+                          <option value="3">Item 3</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row mb-3" *ngIf="showResidentialStateOther()">
+                      <label for="xre_residentialaddressotherstate" class="col-sm-4 col-form-label">State Other</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="xre_residentialaddressotherstate"
+                          
+                          class="form-control" id="xre_residentialaddressotherstate">
+                      </div>
+                    </div>
+                    <div class="row mb-3 form-group required">
+                      <label for="address1_postalcode" class="col-sm-4 col-form-label">Postal Code</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="address1_postalcode"
+                          class="form-control"
+                          id="address1_postalcode">
+                      </div>
+                    </div>
+                    <div class="row mb-3 form-group required">
+                      <label for="xre_residentialaddresscountry" class="col-sm-4 col-form-label">Country</label>
+                      <div class="col-sm-8">
+                        <select class="form-select" aria-label="Default select example">
+                          <option selected>Select</option>
+                          <option value="1">Item 1</option>
+                          <option value="2">Item 2</option>
+                          <option value="3">Item 3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <h5>Postal Address</h5>
+                    <div class="row mb-3">
+                      <label for="xre_sameasresidentialaddress" class="col-sm-4 col-form-label form-check-label">Same as
+                        physical address</label>
+                      <div class="col-sm-8">
+                        <input type="checkbox" name="xre_sameasresidentialaddress" 
+                          class="multiselect-item-checkbox me-2" id="xre_sameasresidentialaddress">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="address2_line1" class="col-sm-4 col-form-label">Building/Property Name</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="address2_line1"
+                          class="form-control"
+                          id="address2_line1">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="address2_line2" class="col-sm-4 col-form-label text-wrap">Unit/Street Details</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="address2_line2"
+                          class="form-control"
+                          id="address2_line2">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="address2_city" class="col-sm-4 col-form-label">Suburb</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="address2_city"
+                          class="form-control" id="address2_city">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="xre_postaladdressstate" class="col-sm-4 col-form-label">State</label>
+                      <div class="col-sm-8">
+                        <select class="form-select" aria-label="Default select example">
+                          <option selected>Select</option>
+                          <option value="1">Item 1</option>
+                          <option value="2">Item 2</option>
+                          <option value="3">Item 3</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row mb-3" *ngIf="showPostalStateOther()">
+                      <label for="xre_postaladdressotherstate" class="col-sm-4 col-form-label">State Other</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="xre_postaladdressotherstate"
+                          class="form-control"
+                          id="xre_postaladdressotherstate">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="address2_postalcode" class="col-sm-4 col-form-label">Postal Code</label>
+                      <div class="col-sm-8">
+                        <input type="text" name="address2_postalcode"
+                          class="form-control"
+                          id="address2_postalcode">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="xre_postaladdresscountry" class="col-sm-4 col-form-label">Country</label>
+                      <div class="col-sm-8">
+                        <select class="form-select" aria-label="Default select example">
+                          <option selected>Select</option>
+                          <option value="1">Item 1</option>
+                          <option value="2">Item 2</option>
+                          <option value="3">Item 3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="border border-primary border-2 opacity-75">
+  <div class="hstack mt-2">
+    <button class="btn btn-lg btn-primary ms-auto action-btn">Save</button>
+  </div>
+</div>
