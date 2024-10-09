@@ -1,48 +1,137 @@
-.list-group-item {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-}
-
-.calendar-section {
-    margin-top: 72px
-}
-
-.my-calendar {
-    text-decoration: none;
-    color: #000;
-}
-
-.list-group-item:hover {
-    color:#378251;
-}
-
-.inline-flatpickr .form-control,
-    .flatpickr-calendar.arrowTop:before,
-    .flatpickr-calendar.arrowTop:after {
-        display: none !important;
-}
-
-.responsive-calendar {
-    width: 100%; /* Ensure the calendar takes up full width */
-    max-width: 100%; /* Prevents it from exceeding the parent container */
-    height: auto; /* Allow height to adjust automatically */
+.event-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
   }
   
-  @media (max-width: 767.98px) { /* Adjust for small screens */
-    .responsive-calendar {
-      margin: 0 auto; /* Centering if necessary */
-    }
+  .event-card {
+    background: #ffffff;
+    border-radius: 8px;
+    
+    width: 250px; /* Adjust width as needed */
   }
-.calendar-view {
-    max-height: 80vh;
-    overflow-y: auto;
+  .card-img-top{
+  /* border-radius: 27px 27px 0 0; Curved top corners */
+  width: 318px !important;
+  height: 159px !important;
+  object-fit: cover;
+  }
+  .event-card h3 {
+    margin-top: 0;
+    font-size:medium;
+    color: #656565;
+    font-weight: bold;
+  }
+  
+  .event-card .start-date{
+    font-size: 13px;
+    font-weight: bold;
+    color: #656565;
+  }
+
+  .event-card .event-description{
+    font-size: 13px;
+    font-weight: lighter;
+    color: #656565;
+  }
+
+  .event-card .event-price{
+    font-size: 13px;
+    font-weight: lighter;
+    color: #656565;
+  }
+
+  .event-card .event-follower{
+    font-size: 13px;
+    font-weight: lighter;
+    color: #656565;
+  }
+  .event-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .event-actions button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #1e90ff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .event-actions button:hover {
+    background-color: #1c86ee;
+  }
+  
+  #content {
+    background-color: #ffffff !important;
+  }
+
+  .btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #378251;
+    --bs-btn-border-color: #378251;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #378251;
+    --bs-btn-hover-border-color: #378251;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #378251;
+    --bs-btn-active-border-color: #378251;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #378251;
+    --bs-btn-disabled-border-color: #378251;
+  }
+
+  .dashboard-card {
+    
+    box-shadow: 0 0 13px 0 rgba(0,0,0,.4);
+  }
+.dashboard-card i {
+    font-size: 50px;
 }
 
-#bookableSpace ul li {
-    font-size: small;
+.dashboard-card .col-sm-9 {
+    padding: 10px;
 }
 
-#events ul li {
+.dashboard-card .card-footer {
+    background-color: #ffffff;
+    border-top: 0px;
+}
+
+.card-body .btn {
     font-size: small;
+    border-radius: 25px;
+    width: 100px;
+}
+  .col-sm-9 .title {
+    font-weight: bold;
+    color: #656565;
+  }
+
+  .col-sm-9 .description {
+    font-weight: bold;
+    color: #656565;
+    font-size: small;
+    margin-top: -15px;
+  }
+
+  .header {
+    background-color: #2d6a4f;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header img {
+    max-height: 60px;
+}
+.content {
+    padding: 0 !important;
 }

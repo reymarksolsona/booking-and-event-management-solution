@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { startOfDay } from 'date-fns';
 import { TRCEvent } from '../../shared/model/model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-events',
@@ -9,7 +10,10 @@ import { TRCEvent } from '../../shared/model/model';
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
-  events: TRCEvent[] = [];
+  events: TRCEvent[] = [];selectedEvent: TRCEvent | null = null;
+  @ViewChild('mapView', { static: true }) mapView!: TemplateRef<any>;
+
+  @ViewChild('bookEvent', { static: true }) modalContent!: TemplateRef<any>;
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
@@ -20,7 +24,7 @@ export class EventsComponent implements OnInit {
     {
       label: '<i class="fas fa-fw fa-trash-alt"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.deleteEvent(event);
+        this.handleEvent('Deleted',event);
       },
     },
   ];
@@ -145,53 +149,22 @@ export class EventsComponent implements OnInit {
       imgUrl: 'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F622058169%2F266000297673%2F1%2Foriginal.20231017-064334?w=600&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2896%2C1448&s=ce3eaf8c1d987424d172831b67b3774c'
     }
   ];
-  
+  constructor(private modalService: NgbModal) {}
   ngOnInit() {
-    this.loadEventsFromLocalStorage();
-  }
-
-  loadEventsFromLocalStorage() {
-    const lsEvents = localStorage.getItem('lsEvents');
-    if (lsEvents) {
-      this.eventsCalendarEvents = JSON.parse(lsEvents).map((event:any) => ({
-        ...event,
-        start: new Date(event.start), // Convert to Date object
-        end: new Date(event.end)      // Convert to Date object
-      }));
-      this.events = this.eventsCalendarEvents;
-    }
-  
-    // Load Events Calendar Events
-    const eventsCalendarEvents = localStorage.getItem('EventsCalendarEvents');
-    if (eventsCalendarEvents) {
-      this.eventsCalendarEvents = JSON.parse(eventsCalendarEvents).map((event: any) => ({
-        ...event,
-        start: new Date(event.start), // Convert to Date object
-        end: new Date(event.end)      // Convert to Date object
-      }));
-    }
-  
-    // Combine both events into the events array
     this.events = [...this.eventsCalendarEvents];
-
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
     console.log(action, event);
   }
-  editEvent(event: CalendarEvent) {
-    // Implement the edit logic here
-    console.log('Editing event:', event);
-    // You might want to open a modal for editing the event
+  
+  openModal(trcEvent: TRCEvent) {
+    this.selectedEvent = trcEvent;
+    this.modalService.open(this.modalContent, { size: 'lg' });
   }
   
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter(event => event !== eventToDelete);
-    this.saveToLocalStorage(); // Make sure to update local storage after deletion
+  openMap(trcEvent: TRCEvent) {
+    this.selectedEvent = trcEvent;
+    this.modalService.open(this.mapView, { size: 'lg' });
   }
-  
-  saveToLocalStorage() {
-    localStorage.setItem('EventsCalendarEvents', JSON.stringify(this.events));
-  }
-  
 }

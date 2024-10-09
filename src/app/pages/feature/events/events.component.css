@@ -86,3 +86,43 @@
     --bs-btn-disabled-bg: #378251;
     --bs-btn-disabled-border-color: #378251;
   }
+
+  .img-fluid {
+    width: 100%;
+    border-radius: 25px;
+  }
+  .modal-title {
+    font-size: large;
+    font-weight: bold;
+  }
+  .event-details .event-date {
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .event-details .event-title {
+    font-weight: bold;
+    font-size: 25px;
+  }
+
+  .event-details .event-description {
+    font-weight: bold;
+    font-size: small;
+  }
+  .event-details h5 {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .event-details .section-detail {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 35px;
+  }
+
+  .section-detail span{
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 42px;
+    color: #2196F3;
+    cursor: pointer;
+  }

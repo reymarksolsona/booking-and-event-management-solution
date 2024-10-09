@@ -1,9 +1,14 @@
-import { Component, TemplateRef, ViewChild, Input } from '@angular/core';
+import { Component, TemplateRef, ViewChild, Input, ChangeDetectorRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarView, CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent } from 'angular-calendar';
 import { subDays, startOfDay, addDays, endOfMonth, addHours, endOfDay, isSameMonth, isSameDay } from 'date-fns';
 import { Subject } from 'rxjs';
 import { EventColor } from 'calendar-utils';
+import { HolidaysService } from 'src/app/core/holidays.service';
+import { HttpParams } from '@angular/common/http';
+import { HOLIDAY_API_ROUTE } from '../../../../shared/constants/holiday_api_route';
+import { COUNTRY_CODE } from 'src/app/shared/constants/country_code';
+import { HOLIDAY_API_KEY } from 'src/app/shared/constants/holiday_api_key';
 
 const colors: Record<string, EventColor> = {
     red: {
@@ -39,8 +44,11 @@ export class CalendarViewComponent {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal) {}
+  constructor(private modal: NgbModal, private holidayService: HolidaysService, private cdr: ChangeDetectorRef) {}
 
+  ngOnInit(): void {
+    this.getHolidays();
+    }
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
       if (isSameMonth(date, this.viewDate)) {
           if ((isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) || events.length === 0) {
@@ -74,4 +82,29 @@ export class CalendarViewComponent {
   closeOpenMonthViewDay(): void {
       this.activeDayIsOpen = false;
   }
+
+    private getHolidays(): void {
+        const params: HttpParams = new HttpParams()
+            .set("country", COUNTRY_CODE)
+            .set("year", String(new Date().getFullYear() - 1))
+            .set("key", HOLIDAY_API_KEY);
+            
+        this.holidayService.getHolidays(HOLIDAY_API_ROUTE, params)
+            .subscribe({
+                next: (res: any) => {
+                    const holidays = res.holidays.map((holiday: any) => ({
+                        start: new Date(holiday.date),
+                        title: holiday.name,
+                        allDay: true,
+                        meta: {
+                          type: 'holiday',
+                          holiday,
+                        }
+                    }));
+                    this.events.push(...holidays);
+                    this.cdr.markForCheck();
+                }
+            }
+        );
+    }
 }

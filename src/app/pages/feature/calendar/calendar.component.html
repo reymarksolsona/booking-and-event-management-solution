@@ -11,10 +11,7 @@
           <div class="col">
             <div class="collapse multi-collapse" id="bookableSpace">
               <ul class="list-group">
-                <li class="list-group-item text-success" (click)="openModal('Bookable Space')" >
-                  <i class="bi bi-calendar-plus"></i> Add Event
-                </li>
-                <li class="list-group-item ms-3" *ngFor="let event of myCalendarEvents">
+                <li class="list-group-item" *ngFor="let event of myCalendarEvents">
                     <i class="bi bi-check-circle-fill"></i> {{event.title}}
                 </li>
               </ul>
@@ -32,10 +29,7 @@
           <div class="col">
             <div class="collapse multi-collapse" id="events">
               <ul class="list-group">
-                <li class="list-group-item text-success" (click)="openModal('Events')" >
-                  <i class="bi bi-calendar-plus"></i> Add Event
-                </li>
-                <li class="list-group-item ms-3" *ngFor="let event of eventsCalendarEvents">
+                <li class="list-group-item" *ngFor="let event of eventsCalendarEvents">
                     <i class="bi bi-check-circle-fill"></i> {{event.title}}
                 </li>
               </ul>
@@ -89,4 +83,3 @@
       </div>
     </ng-template>
   </div>
-  

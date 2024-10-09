@@ -18,7 +18,35 @@ import { CalendarViewComponent } from './pages/shared/common/calendar-view/calen
 import { EventsComponent } from './pages/feature/events/events.component';
 import { VenuesComponent } from './pages/feature/venues/venues.component';
 import { HomeComponent } from './pages/feature/home/home.component';
+import { HttpClientModule } from '@angular/common/http';
+import { PublicClientApplication ,InteractionType} from '@azure/msal-browser';
+import { MsalModule, MsalInterceptor, MSAL_INSTANCE, MsalService, MSAL_INTERCEPTOR_CONFIG ,MsalGuard, MsalGuardConfiguration, MsalInterceptorConfiguration } from '@azure/msal-angular';
 
+const msalConfig = {
+  auth: {
+    clientId: '4d4ece44-3e46-4ec9-88f2-4d4af8c0989a',
+    authority: 'https://login.microsoftonline.com/YOUR_TENANT_ID', // Replace with your tenant ID
+    redirectUri: 'https://localhost:4200', 
+  },
+};
+
+const msalInstance = new PublicClientApplication(msalConfig);
+
+// MSAL Guard Configuration
+const msalGuardConfig: MsalGuardConfiguration = {
+  interactionType: InteractionType.Redirect,
+  authRequest: {
+    scopes: ['User.Read'], // Add your required scopes here
+  },
+};
+
+// MSAL Interceptor Configuration
+const msalInterceptorConfig: MsalInterceptorConfiguration = {
+  interactionType: InteractionType.Redirect, 
+  protectedResourceMap: new Map<string, string[]>([
+    ['https://atlas.microsoft.com/', ['YOUR_AZURE_MAPS_SCOPE']], // Use Azure Maps scope
+  ]),
+};
 export function momentAdapterFactory() {
   return adapterFactory(moment);
 };
@@ -43,10 +71,15 @@ export function momentAdapterFactory() {
     BrowserAnimationsModule,
     FlatpickrModule.forRoot(),
     ReactiveFormsModule,
+    HttpClientModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: momentAdapterFactory }),
-    NgbModule
+    NgbModule,
+    MsalModule.forRoot(msalInstance, msalGuardConfig, msalInterceptorConfig),
   ],
-  providers: [],
+  providers:  [
+    MsalService,
+    MsalInterceptor,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,1 @@
+export const HOLIDAY_API_ROUTE = 'holidays';
