@@ -16,6 +16,8 @@ import { HeaderComponent } from './pages/shared/layout/header/header.component';
 import { SidebarComponent } from './pages/shared/layout/sidebar/sidebar.component';
 import { CalendarViewComponent } from './pages/shared/common/calendar-view/calendar-view.component';
 import { EventsComponent } from './pages/feature/events/events.component';
+import { VenuesComponent } from './pages/feature/venues/venues.component';
+import { HomeComponent } from './pages/feature/home/home.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -28,7 +30,9 @@ export function momentAdapterFactory() {
     SidebarComponent,
     CalendarComponent,
     CalendarViewComponent,
-    EventsComponent
+    EventsComponent,
+    VenuesComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

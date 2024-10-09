@@ -1,16 +1,18 @@
 
 <h4 style="gap: 20px;
     padding: 20px;
-    color: #656565;font-weight:bold;">Events in Toowoomba City</h4>
+    color: #656565;font-weight:bold;">Venues in Toowoomba City</h4>
 <div class="event-container">
   <div class="card event-card" style="width: 20rem;" *ngFor="let event of events" >
     <img src={{event.imgUrl}} class="card-img-top" alt="...">
     <div class="card-body">
       <h3 class="mt-3">{{ event.title }}</h3>
-      <p class="start-date">{{ event.start | date:'EEE, dd MMM, h:mm a' }}</p>
-      <p class="event-description">{{ event.meta.description }}</p>
-      <p class="event-price">Free</p>
-      
+      <p class="event-price">Location: {{event.location}}</p>
+      <p class="event-price">Contact: {{event.contact}}</p>
+      <p class="event-price">Open hours:</p>
+      <ul>
+        <li class="event-price" *ngFor="let oh of event.openHours">{{oh}}</li>
+      </ul>
     </div>
     <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end">
       <button class="btn btn-primary md-2" type="button">Book</button>

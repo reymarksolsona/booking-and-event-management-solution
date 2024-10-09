@@ -13,9 +13,9 @@
   }
   .card-img-top{
   /* border-radius: 27px 27px 0 0; Curved top corners */
-    width: 318px !important;
-    height: 159px !important;
-    object-fit: cover;
+  width: 318px !important;
+  height: 159px !important;
+  object-fit: cover;
   }
   .event-card h3 {
     margin-top: 0;

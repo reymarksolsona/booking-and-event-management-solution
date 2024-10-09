@@ -1,0 +1,48 @@
+.list-group-item {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.calendar-section {
+    margin-top: 72px
+}
+
+.my-calendar {
+    text-decoration: none;
+    color: #000;
+}
+
+.list-group-item:hover {
+    color:#378251;
+}
+
+.inline-flatpickr .form-control,
+    .flatpickr-calendar.arrowTop:before,
+    .flatpickr-calendar.arrowTop:after {
+        display: none !important;
+}
+
+.responsive-calendar {
+    width: 100%; /* Ensure the calendar takes up full width */
+    max-width: 100%; /* Prevents it from exceeding the parent container */
+    height: auto; /* Allow height to adjust automatically */
+  }
+  
+  @media (max-width: 767.98px) { /* Adjust for small screens */
+    .responsive-calendar {
+      margin: 0 auto; /* Centering if necessary */
+    }
+  }
+.calendar-view {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+#bookableSpace ul li {
+    font-size: small;
+}
+
+#events ul li {
+    font-size: small;
+}
