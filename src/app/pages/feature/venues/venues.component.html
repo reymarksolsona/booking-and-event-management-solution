@@ -11,7 +11,7 @@
     </div>
   </div>
 <div class="event-container">
-  <div [hidden]="activeTab !== 'map'" id="main-map" style="width: 100%; height: 500px;"></div>
+  <div [hidden]="activeTab !== 'map'" id="main-map" style="width: 100%; height: 70vh;"></div>
 
   <div [hidden]="activeTab !== 'tiles'" class="card event-card" style="width: 20rem;" *ngFor="let event of events" >
     <img src={{event.imgUrl}} class="card-img-top" alt="...">
