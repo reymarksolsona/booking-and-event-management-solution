@@ -50,7 +50,14 @@ export class VenuesComponent implements OnInit {
             color: '#dc3545'
           });
           const popup = new atlas.Popup({
-            content: `<div style="width: 200px;min-height: 75px;padding: 10px;color: #ffffff;background-color: #378251;"><strong>${event.title}</strong><br>Contact No.: ${event.contact}</div>`, // Customize popup content
+            content: `<div class="text-center" style="width: 220px; height: auto; padding: 15px; color: #ffffff; background-color: #378251; border-radius: 5px;">
+              <div class="container-fluid text-center">
+                <img src="${event.imgUrl}" width="150" class="mb-3" style="object-fit: cover; border-radius: 5px;">
+              </div>
+              <strong>${event.title}</strong><br>Contact No.: ${event.contact}
+              <br>
+      <button style="background-color: #378251;border: 1px solid;" class="btn btn-sm btn-primary mt-2" type="button" (click)="openModal(event)">Book</button>
+            </div>`, // Customize popup content
             position: [lngLat[0], lngLat[1] + 0.050]
           });
           // Add the marker to the map
@@ -77,7 +84,12 @@ export class VenuesComponent implements OnInit {
             color: '#dc3545'
           });
           const popup = new atlas.Popup({
-            content: `<div><strong>${selectedEvent?.title}</strong><br>Contact No.: ${selectedEvent?.contact}</div>`, // Customize popup content
+            content: `<div class="text-center" style="width: 220px; height: auto; padding: 15px; color: #ffffff; background-color: #378251; border-radius: 5px;">
+              <div class="container-fluid text-center">
+                <img src="${selectedEvent?.imgUrl}" width="150" class="mb-3" style="object-fit: cover; border-radius: 5px;">
+              </div>
+              <strong>${selectedEvent?.title}</strong><br>Contact No.: ${selectedEvent?.contact}
+            </div>`, // Customize popup content
             position: [lngLat[0], lngLat[1] + 0.050]
           });
           // Add the marker to the map

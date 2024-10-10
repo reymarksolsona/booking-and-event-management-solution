@@ -161,3 +161,21 @@
   border: 0;
   padding: 0;
 }
+
+.custom-popup {
+  background-color: #378251; /* Background color of the popup */
+  border-radius: 5px; /* Rounded corners */
+  position: relative; /* Needed for positioning the arrow */
+  padding: 15px; /* Padding for the content */
+}
+
+.custom-popup::after {
+  content: '';
+  position: absolute;
+  bottom: 100%; /* Position the arrow above the popup */
+  left: 50%; /* Center the arrow */
+  margin-left: -7px; /* Adjust to center */
+  border-width: 7px; /* Size of the arrow */
+  border-style: solid;
+  border-color: transparent transparent #378251 transparent; /* Arrow color matches popup background */
+}
