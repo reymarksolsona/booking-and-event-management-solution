@@ -4,6 +4,7 @@ import { startOfDay } from 'date-fns';
 import { TRCEvent } from '../../shared/model/model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { Map, AuthenticationType } from 'azure-maps-control';
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
@@ -166,5 +167,17 @@ export class EventsComponent implements OnInit {
   openMap(trcEvent: TRCEvent) {
     this.selectedEvent = trcEvent;
     this.modalService.open(this.mapView, { size: 'lg' });
+    setTimeout(() => this.initializeMap(), 2000);
+  }
+  initializeMap(): void {
+    
+    const map = new Map('map', {
+      center: [151.949997, -27.566668],
+      zoom: 8,
+      authOptions: {
+        authType: AuthenticationType.subscriptionKey,
+        subscriptionKey: 'Hk9mGeCHSYkZzNMwWkizYHrbu3DZywS7r7yWafAt303oSuUHjXySJQQJ99AJAC5RqLJwadhfAAAgAZMPoJep'
+      }
+    });
   }
 }
