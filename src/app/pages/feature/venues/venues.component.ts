@@ -24,7 +24,7 @@ export class VenuesComponent implements OnInit {
   
   initializeMap(mapId: string = 'main-map'): void {
     const map = new Map(mapId, {
-      center: [-27.561203487190944, 151.95004819560108],
+      center: [151.949997, -27.566668],
       zoom: 8,
       authOptions: {
         authType: AuthenticationType.subscriptionKey,
@@ -42,7 +42,7 @@ export class VenuesComponent implements OnInit {
         const marker = new atlas.HtmlMarker({
           position: lngLat, // Use the correctly ordered lngLat
           text: event.title,  // Display event title on marker
-          color: 'DodgerBlue' // You can customize the marker color
+          color: '#dc3545' // You can customize the marker color
         });
     
         // Add the marker to the map
