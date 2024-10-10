@@ -21,13 +21,13 @@ export class VenuesComponent implements OnInit {
     this.activeTab = tabName
   }
 
-  initializeMap(): void {
-    const map = new Map('map', {
+  initializeMap(mapId: string = 'main-map'): void {
+    const map = new Map(mapId, {
       center: [50.016, 36.13],
       zoom: 8,
       authOptions: {
-          authType: AuthenticationType.subscriptionKey,
-          subscriptionKey: 'Hk9mGeCHSYkZzNMwWkizYHrbu3DZywS7r7yWafAt303oSuUHjXySJQQJ99AJAC5RqLJwadhfAAAgAZMPoJep'
+        authType: AuthenticationType.subscriptionKey,
+        subscriptionKey: 'Hk9mGeCHSYkZzNMwWkizYHrbu3DZywS7r7yWafAt303oSuUHjXySJQQJ99AJAC5RqLJwadhfAAAgAZMPoJep'
       }
     });
   }
@@ -193,7 +193,7 @@ export class VenuesComponent implements OnInit {
   openMap(trcEvent: TRCBookableSpace) {
     this.selectedEvent = trcEvent;
     this.modalService.open(this.mapView, { size: 'lg' });
-    setTimeout(() => this.initializeMap(), 2000);
+    setTimeout(() => this.initializeMap('modal-map'), 2000);
   }
   loadEventsFromLocalStorage() {
     const lsEvents = localStorage.getItem('lsEvents');
