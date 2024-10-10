@@ -7,3 +7,11 @@ html, body {
   font-family: 'Roboto', sans-serif;
   background-color: #ffffff;
 }
+
+#maincontent {
+  flex-grow: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100%;
+  padding: 50px 30px 30px 30px;
+}

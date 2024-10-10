@@ -1,11 +1,10 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { startOfDay } from 'date-fns';
 import { TRCBookableSpace, TRCEvent } from '../../shared/model/model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MsalService } from '@azure/msal-angular';
-import * as atlas from 'azure-maps-control';
-import { AuthenticationType } from 'azure-maps-control';
+import { Map, AuthenticationType } from 'azure-maps-control';
 
 @Component({
   selector: 'app-venues',
@@ -16,6 +15,18 @@ export class VenuesComponent implements OnInit {
   events: TRCBookableSpace[] = [];
   @ViewChild('bookEvent', { static: true }) bookEvent!: TemplateRef<any>;
   @ViewChild('mapView', { static: true }) mapView!: TemplateRef<any>;
+
+  initializeMap(): void {
+    const map = new Map('map', {
+      center: [50.016, 36.13],
+      zoom: 8,
+      authOptions: {
+          authType: AuthenticationType.subscriptionKey,
+          subscriptionKey: 'Hk9mGeCHSYkZzNMwWkizYHrbu3DZywS7r7yWafAt303oSuUHjXySJQQJ99AJAC5RqLJwadhfAAAgAZMPoJep'
+      }
+    });
+  }
+
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
@@ -157,14 +168,15 @@ export class VenuesComponent implements OnInit {
   ];selectedEvent: TRCBookableSpace | null = null;
   constructor(private modalService: NgbModal,private msalService: MsalService) {}
   ngOnInit() {
-    this.msalService.instance.acquireTokenSilent({
-      scopes: ['YOUR_AZURE_MAPS_SCOPE']
-    }).then((response:any) => {
-      this.initializeMap(response.accessToken);
-    }).catch((error:any) => {
-      console.error('Token acquisition failed:', error);
-      // Fallback: Optionally, handle token acquisition failure
-    });
+    // this.msalService.instance.acquireTokenSilent({
+    //   scopes: ['YOUR_AZURE_MAPS_SCOPE']
+    // }).then((response:any) => {
+    //   this.initializeMap(response.accessToken);
+    // }).catch((error:any) => {
+    //   console.error('Token acquisition failed:', error);
+    //   // Fallback: Optionally, handle token acquisition failure
+    // });
+    // this.initializeMap();
     this.loadEventsFromLocalStorage();
   }
 
@@ -176,6 +188,7 @@ export class VenuesComponent implements OnInit {
   openMap(trcEvent: TRCBookableSpace) {
     this.selectedEvent = trcEvent;
     this.modalService.open(this.mapView, { size: 'lg' });
+    setTimeout(() => this.initializeMap(), 2000);
   }
   loadEventsFromLocalStorage() {
     const lsEvents = localStorage.getItem('lsEvents');
@@ -220,28 +233,5 @@ export class VenuesComponent implements OnInit {
   saveToLocalStorage() {
     localStorage.setItem('EventsCalendarEvents', JSON.stringify(this.events));
   }
-  map: any;
-
-  initializeMap(accessToken: string): void {
-    this.map = new atlas.Map('map', {
-      center: [-122.33, 47.6],
-      zoom: 10,
-      authOptions: {
-        authType: AuthenticationType.aad, 
-        tenantId: 'YOUR_TENANT_ID', // Replace with your tenant ID
-        clientId: '4d4ece44-3e46-4ec9-88f2-4d4af8c0989a',
-        clientSecret: 'YOUR_CLIENT_SECRET', 
-        accessToken: accessToken,
-      },
-    });
-
-    this.map.events.add('ready', () => {
-      this.addDataSources();
-    });
-  }
-
-  addDataSources(): void {
-    const datasource = new atlas.source.DataSource();
-    this.map.sources.add(datasource);
-  }
+  
 }
