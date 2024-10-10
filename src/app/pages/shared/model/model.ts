@@ -901,4 +901,3 @@ export interface Profile {
 export interface childProfile extends PersonalInformation {
     parentContactId: string;
 }
-  

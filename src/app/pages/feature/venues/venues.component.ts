@@ -15,6 +15,11 @@ export class VenuesComponent implements OnInit {
   events: TRCBookableSpace[] = [];
   @ViewChild('bookEvent', { static: true }) bookEvent!: TemplateRef<any>;
   @ViewChild('mapView', { static: true }) mapView!: TemplateRef<any>;
+  activeTab: string = 'tiles';
+
+  switchTab(tabName: string): void {
+    this.activeTab = tabName
+  }
 
   initializeMap(): void {
     const map = new Map('map', {
@@ -176,7 +181,7 @@ export class VenuesComponent implements OnInit {
     //   console.error('Token acquisition failed:', error);
     //   // Fallback: Optionally, handle token acquisition failure
     // });
-    // this.initializeMap();
+     this.initializeMap();
     this.loadEventsFromLocalStorage();
   }
 

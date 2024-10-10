@@ -131,3 +131,10 @@
     list-style-type: none;
     padding-left: 7px;
   }
+
+  .tab-switch {
+    
+    padding: 25px 5px 5px 5px;
+    font-size: large;
+    cursor: pointer;
+  }
