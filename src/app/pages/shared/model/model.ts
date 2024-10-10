@@ -7,7 +7,8 @@ export interface TRCEvent extends CalendarEvent {
 export interface TRCBookableSpace extends TRCEvent {
     contact: string,
     location: string,
-    openHours: string[]
+    openHours: string[],
+    coordinates: [number, number]
 }
 
 export interface Profile {
