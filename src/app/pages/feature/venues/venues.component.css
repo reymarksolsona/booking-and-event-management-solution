@@ -138,3 +138,26 @@
     font-size: large;
     cursor: pointer;
   }
+
+  .popup-arrow {
+    align-self: center;
+    border-bottom: none;
+    border-top-color: #378251 !important;
+}
+
+.atlas-map .popup-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #fff;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 20px;
+  height: 20px;
+  width: 20px;
+  text-align: center;
+  cursor: pointer;
+  background: 0 0;
+  border: 0;
+  padding: 0;
+}

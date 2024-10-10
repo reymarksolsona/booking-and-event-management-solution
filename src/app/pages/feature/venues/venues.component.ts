@@ -46,12 +46,11 @@ export class VenuesComponent implements OnInit {
       
           // Create a marker for the event
           const marker = new atlas.HtmlMarker({
-            position: lngLat, // Use the correctly ordered lngLat
-            text: event.title,  // Display event title on marker
+            position: lngLat, 
             color: '#dc3545'
           });
           const popup = new atlas.Popup({
-            content: `<div><strong>${event.title}</strong><br>Contact No.: ${event.contact}</div>`, // Customize popup content
+            content: `<div style="width: 200px;min-height: 75px;padding: 10px;color: #ffffff;background-color: #378251;"><strong>${event.title}</strong><br>Contact No.: ${event.contact}</div>`, // Customize popup content
             position: [lngLat[0], lngLat[1] + 0.050]
           });
           // Add the marker to the map
