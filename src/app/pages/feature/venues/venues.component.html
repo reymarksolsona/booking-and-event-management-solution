@@ -5,9 +5,9 @@
           padding: 20px;
           color: #656565;font-weight:bold;">Venues in Toowoomba City</h4></div>
     <div class="bd-highlight tab-switch">
-      <i class="bi bi-grid" (click)="switchTab('tiles')"></i>
+      <i class="bi " [ngClass]="{'bi-grid-fill text-success': activeTab === 'tiles', 'bi-grid': activeTab !== 'tiles'}" (click)="switchTab('tiles')"></i>
     </div><div class="bd-highlight tab-switch">
-      <i class="bi bi-map" (click)="switchTab('map')"></i>
+      <i class="bi " [ngClass]="{'bi-map-fill text-success': activeTab === 'map', 'bi-map': activeTab !== 'map'}" (click)="switchTab('map')"></i>
     </div>
   </div>
 <div class="event-container">

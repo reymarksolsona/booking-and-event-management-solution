@@ -84,3 +84,9 @@
 .nav .nav-item i {
     margin-right: 15px;
 }
+
+.active-link {
+    background-color: #378251;
+    color: #ffffff !important;
+    font-weight: bold;
+}

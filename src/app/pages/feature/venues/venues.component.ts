@@ -1,9 +1,8 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { startOfDay } from 'date-fns';
-import { TRCBookableSpace, TRCEvent } from '../../shared/model/model';
+import { TRCBookableSpace } from '../../shared/model/model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MsalService } from '@azure/msal-angular';
 import { Map, AuthenticationType } from 'azure-maps-control';
 import * as atlas from 'azure-maps-control';
 
@@ -185,7 +184,7 @@ export class VenuesComponent implements OnInit {
       ]
     }
   ];selectedEvent: TRCBookableSpace | null = null;
-  constructor(private modalService: NgbModal,private msalService: MsalService) {}
+  constructor(private modalService: NgbModal) {}
   ngOnInit() {
      this.initializeMap();
     this.loadEventsFromLocalStorage();

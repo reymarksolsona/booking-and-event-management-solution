@@ -5,6 +5,7 @@ import { TRCEvent } from '../../shared/model/model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Map, AuthenticationType } from 'azure-maps-control';
+import * as atlas from 'azure-maps-control';
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
@@ -13,8 +14,8 @@ import { Map, AuthenticationType } from 'azure-maps-control';
 export class EventsComponent implements OnInit {
   events: TRCEvent[] = [];selectedEvent: TRCEvent | null = null;
   @ViewChild('mapView', { static: true }) mapView!: TemplateRef<any>;
-
   @ViewChild('bookEvent', { static: true }) modalContent!: TemplateRef<any>;
+  
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
@@ -153,8 +154,13 @@ export class EventsComponent implements OnInit {
   constructor(private modalService: NgbModal) {}
   ngOnInit() {
     this.events = [...this.eventsCalendarEvents];
+    this.initializeMap();
   }
+  activeTab: string = 'tiles';
 
+  switchTab(tabName: string): void {
+    this.activeTab = tabName
+  }
   handleEvent(action: string, event: CalendarEvent): void {
     console.log(action, event);
   }
@@ -167,17 +173,91 @@ export class EventsComponent implements OnInit {
   openMap(trcEvent: TRCEvent) {
     this.selectedEvent = trcEvent;
     this.modalService.open(this.mapView, { size: 'lg' });
-    setTimeout(() => this.initializeMap(), 2000);
+    setTimeout(() => this.initializeMap('modal-map'), 2000);
   }
-  initializeMap(): void {
-    
-    const map = new Map('map', {
-      center: [151.949997, -27.566668],
+
+  initializeMap(mapId: string = 'main-map', selectedEvent: any = null): void {
+    let center = [];
+    if (mapId === 'main-map') {
+      center = [151.949997, -27.566668];
+    } else {
+      center = [151.949997, -27.566668];
+      //center = [selectedEvent.coordinates[1], selectedEvent.coordinates[0]];
+    }
+    const map = new Map(mapId, {
+      center: center,
       zoom: 8,
       authOptions: {
         authType: AuthenticationType.subscriptionKey,
         subscriptionKey: 'Hk9mGeCHSYkZzNMwWkizYHrbu3DZywS7r7yWafAt303oSuUHjXySJQQJ99AJAC5RqLJwadhfAAAgAZMPoJep'
       }
     });
+    // if (mapId === 'main-map') {
+    //   this.eventsCalendarEvents.forEach(event => {
+    //     const coordinates = event.coordinates; // Assumed you have a `coordinates` property with [lat, lon]
+    
+    //     if (coordinates && coordinates.length === 2) {
+    //       const lngLat = [coordinates[1], coordinates[0]]; // Reverse to [lon, lat]
+      
+    //       // Create a marker for the event
+    //       const marker = new atlas.HtmlMarker({
+    //         position: lngLat, 
+    //         color: '#dc3545'
+    //       });
+    //       const popup = new atlas.Popup({
+    //         content: `<div class="text-center" style="width: 220px; height: auto; padding: 15px; color: #ffffff; background-color: #378251; border-radius: 5px;">
+    //           <div class="container-fluid text-center">
+    //             <img src="${event.imgUrl}" width="150" class="mb-3" style="object-fit: cover; border-radius: 5px;">
+    //           </div>
+    //           <strong>${event.title}</strong><br>Contact No.: ${event.contact}
+    //           <br>
+    //   <button style="background-color: #378251;border: 1px solid;" class="btn btn-sm btn-primary mt-2" type="button" (click)="openModal(event)">Book</button>
+    //         </div>`, // Customize popup content
+    //         position: [lngLat[0], lngLat[1] + 0.050]
+    //       });
+    //       // Add the marker to the map
+    //       map.markers.add(marker);
+    //       marker.getElement().addEventListener('click', () => {
+    //         // Open or close the popup on click
+    //         if (popup.isOpen()) {  // Call isOpen() method
+    //           popup.close();
+    //         } else {
+    //           popup.open(map);
+    //         }
+    //       });
+    //     }
+    //   });
+    // } else {
+    //   const coordinates = selectedEvent?.coordinates; // Assumed you have a `coordinates` property with [lat, lon]
+    // console
+    //     if (coordinates && coordinates.length === 2) {
+    //       const lngLat = [coordinates[1], coordinates[0]]; // Reverse to [lon, lat]
+      
+    //       // Create a marker for the event
+    //       const marker = new atlas.HtmlMarker({
+    //         position: lngLat, // Use the correctly ordered lngLat
+    //         color: '#dc3545'
+    //       });
+    //       const popup = new atlas.Popup({
+    //         content: `<div class="text-center" style="width: 220px; height: auto; padding: 15px; color: #ffffff; background-color: #378251; border-radius: 5px;">
+    //           <div class="container-fluid text-center">
+    //             <img src="${selectedEvent?.imgUrl}" width="150" class="mb-3" style="object-fit: cover; border-radius: 5px;">
+    //           </div>
+    //           <strong>${selectedEvent?.title}</strong><br>Contact No.: ${selectedEvent?.contact}
+    //         </div>`, // Customize popup content
+    //         position: [lngLat[0], lngLat[1] + 0.050]
+    //       });
+    //       // Add the marker to the map
+    //       map.markers.add(marker);
+    //       marker.getElement().addEventListener('click', () => {
+    //         // Open or close the popup on click
+    //         if (popup.isOpen()) {  // Call isOpen() method
+    //           popup.close();
+    //         } else {
+    //           popup.open(map);
+    //         }
+    //       });
+    //     }
+    // }
   }
 }

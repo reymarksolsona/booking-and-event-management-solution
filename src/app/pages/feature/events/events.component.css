@@ -126,3 +126,9 @@
     color: #2196F3;
     cursor: pointer;
   }
+  .tab-switch {
+    
+    padding: 25px 5px 5px 5px;
+    font-size: large;
+    cursor: pointer;
+  }
