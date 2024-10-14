@@ -55,7 +55,7 @@
       <h5>Date and time</h5>
       <p class="section-detail mt-3"><i class="bi bi-calendar-check ms-2 me-3"></i> {{ selectedEvent?.start | date:'EEE, dd MMM, h:mm a' }} - {{ selectedEvent?.end | date:'EEE, dd MMM, h:mm a' }}</p>
       <h5>Location</h5>
-      <p class="section-detail mt-3"><i class="bi bi-geo-alt-fill ms-2 me-3"></i> Toowoomba
+      <p class="section-detail mt-3"><i class="bi bi-geo-alt-fill ms-2 me-3"></i> {{ selectedEvent?.location }}
       <br><span>Show map</span> <i class="bi bi-chevron-down ms-2 mt-2"></i></p>
       <h5>Refund Policy</h5>
       <p class="section-detail mt-3">Refunds up to 1 day before event

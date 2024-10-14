@@ -1,7 +1,9 @@
 import { CalendarEvent } from "angular-calendar";
 
 export interface TRCEvent extends CalendarEvent {
-    imgUrl: string
+    imgUrl: string,
+    location?: string,
+    coordinates?: [number, number]
 }
 
 export interface TRCBookableSpace extends TRCEvent {

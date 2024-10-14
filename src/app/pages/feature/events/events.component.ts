@@ -15,7 +15,7 @@ export class EventsComponent implements OnInit {
   events: TRCEvent[] = [];selectedEvent: TRCEvent | null = null;
   @ViewChild('mapView', { static: true }) mapView!: TemplateRef<any>;
   @ViewChild('bookEvent', { static: true }) modalContent!: TemplateRef<any>;
-  
+
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
@@ -40,6 +40,8 @@ export class EventsComponent implements OnInit {
       color: { primary: '#ad2121', secondary: '#FAE3E3' },
       actions: this.actions,
       allDay: true,
+      location: 'Grand Central Shopping Centre',
+      coordinates: [-27.56141901846049, 151.9511169455838],
       meta: {
         description: 'Get ready to embrace the joy of longer days and vibrant styles! Our Spring Fashion Weekend is here!',
         recurring: true
@@ -53,6 +55,8 @@ export class EventsComponent implements OnInit {
       color: { primary: '#ad2121', secondary: '#FAE3E3' },
       actions: this.actions,
       allDay: true,
+      location: 'BCC Cinemas Toowoomba Strand',
+      coordinates: [-27.561070921504406, 151.95625083394214],
       meta: {
         description: 'Immerse yourself in the world of travelling with Uniworld as we showcase our breathtaking itineraries on the big screen.',
         recurring: true
@@ -66,6 +70,8 @@ export class EventsComponent implements OnInit {
       color: { primary: '#ad2121', secondary: '#FAE3E3' },
       actions: this.actions,
       allDay: true,
+      location: '259 Ruthven St',
+      coordinates: [-27.553544795530804, 151.9542989298376],
       meta: {
         description: 'Critical Workplace Cases and Regulatory Changes',
         recurring: true
@@ -79,6 +85,8 @@ export class EventsComponent implements OnInit {
       color: { primary: '#ad2121', secondary: '#FAE3E3' },
       actions: this.actions,
       allDay: true,
+      location: 'The Ridge Toowoomba',
+      coordinates: [-27.595186888914142, 151.9941384461062],
       meta: {
         description: "Join AEIOU Toowoomba for a FREE 2-hour workshop to gain insight and useful strategies whilst exploring a child's development.",
         recurring: true
@@ -92,6 +100,8 @@ export class EventsComponent implements OnInit {
       color: { primary: '#ad2121', secondary: '#FAE3E3' },
       actions: this.actions,
       allDay: true,
+      location: 'Rumours International',
+      coordinates: [-27.558011214939626, 151.95341301349245],
       meta: {
         description: "TGW & Smithy's Promotions presents THE BIG FIGHTS 37 featuring local favourites Stoneleigh Jackson, Dylan Biggs, 'Gunson' Morris & more.",
         recurring: true
@@ -105,6 +115,8 @@ export class EventsComponent implements OnInit {
       color: { primary: '#ad2121', secondary: '#FAE3E3' },
       actions: this.actions,
       allDay: true,
+      location: 'The Annex',
+      coordinates: [-27.563406860178684, 151.9523595034908],
       meta: {
         description: 'A friendly mix of competition and networking, while enjoying a fun day on the green with members and industry players.',
         recurring: true
@@ -118,6 +130,8 @@ export class EventsComponent implements OnInit {
       color: { primary: '#ad2121', secondary: '#FAE3E3' },
       actions: this.actions,
       allDay: true,
+      location: 'Toowoomba Carnival Of Flowers',
+      coordinates:[-27.559675727573314, 151.96207459801374],
       meta: {
         description: 'Join artist Jan Lawnikanis in exploring the mediums of watercolours and watersoluble pencils in creating vibrant and textural paintings.',
         recurring: true
@@ -131,6 +145,8 @@ export class EventsComponent implements OnInit {
       color: { primary: '#ad2121', secondary: '#FAE3E3' },
       actions: this.actions,
       allDay: true,
+      location: 'RASQ Clive Berghofer Events Centre',
+      coordinates: [-27.557647734745867, 151.89195645721384],
       meta: {
         description: 'Learn how to approach the complex subject of Waterfalls & Creeks in this 4 week course with an experienced local artist & tutor(for adults).',
         recurring: true
@@ -144,6 +160,8 @@ export class EventsComponent implements OnInit {
       color: { primary: '#ad2121', secondary: '#FAE3E3' },
       actions: this.actions,
       allDay: true,
+      location: 'The Power House',
+      coordinates: [-27.5592253233605, 151.95616957216728],
       meta: {
         description: 'MAGIC MEN AUSTRALIA TAKE OVER TOOWOOMBA, QLD!!!',
         recurring: true
@@ -173,7 +191,7 @@ export class EventsComponent implements OnInit {
   openMap(trcEvent: TRCEvent) {
     this.selectedEvent = trcEvent;
     this.modalService.open(this.mapView, { size: 'lg' });
-    setTimeout(() => this.initializeMap('modal-map'), 2000);
+    setTimeout(() => this.initializeMap('modal-map', this.selectedEvent), 2000);
   }
 
   initializeMap(mapId: string = 'main-map', selectedEvent: any = null): void {
@@ -181,83 +199,81 @@ export class EventsComponent implements OnInit {
     if (mapId === 'main-map') {
       center = [151.949997, -27.566668];
     } else {
-      center = [151.949997, -27.566668];
-      //center = [selectedEvent.coordinates[1], selectedEvent.coordinates[0]];
+      center = [selectedEvent.coordinates[1], selectedEvent.coordinates[0]];
     }
     const map = new Map(mapId, {
       center: center,
-      zoom: 8,
+      zoom: 10,
       authOptions: {
         authType: AuthenticationType.subscriptionKey,
         subscriptionKey: 'Hk9mGeCHSYkZzNMwWkizYHrbu3DZywS7r7yWafAt303oSuUHjXySJQQJ99AJAC5RqLJwadhfAAAgAZMPoJep'
       }
     });
-    // if (mapId === 'main-map') {
-    //   this.eventsCalendarEvents.forEach(event => {
-    //     const coordinates = event.coordinates; // Assumed you have a `coordinates` property with [lat, lon]
+    if (mapId === 'main-map') {
+      this.eventsCalendarEvents.forEach(event => {
+        const coordinates = event.coordinates; // Assumed you have a `coordinates` property with [lat, lon]
     
-    //     if (coordinates && coordinates.length === 2) {
-    //       const lngLat = [coordinates[1], coordinates[0]]; // Reverse to [lon, lat]
+        if (coordinates && coordinates.length === 2) {
+          const lngLat = [coordinates[1], coordinates[0]]; // Reverse to [lon, lat]
       
-    //       // Create a marker for the event
-    //       const marker = new atlas.HtmlMarker({
-    //         position: lngLat, 
-    //         color: '#dc3545'
-    //       });
-    //       const popup = new atlas.Popup({
-    //         content: `<div class="text-center" style="width: 220px; height: auto; padding: 15px; color: #ffffff; background-color: #378251; border-radius: 5px;">
-    //           <div class="container-fluid text-center">
-    //             <img src="${event.imgUrl}" width="150" class="mb-3" style="object-fit: cover; border-radius: 5px;">
-    //           </div>
-    //           <strong>${event.title}</strong><br>Contact No.: ${event.contact}
-    //           <br>
-    //   <button style="background-color: #378251;border: 1px solid;" class="btn btn-sm btn-primary mt-2" type="button" (click)="openModal(event)">Book</button>
-    //         </div>`, // Customize popup content
-    //         position: [lngLat[0], lngLat[1] + 0.050]
-    //       });
-    //       // Add the marker to the map
-    //       map.markers.add(marker);
-    //       marker.getElement().addEventListener('click', () => {
-    //         // Open or close the popup on click
-    //         if (popup.isOpen()) {  // Call isOpen() method
-    //           popup.close();
-    //         } else {
-    //           popup.open(map);
-    //         }
-    //       });
-    //     }
-    //   });
-    // } else {
-    //   const coordinates = selectedEvent?.coordinates; // Assumed you have a `coordinates` property with [lat, lon]
-    // console
-    //     if (coordinates && coordinates.length === 2) {
-    //       const lngLat = [coordinates[1], coordinates[0]]; // Reverse to [lon, lat]
+          // Create a marker for the event
+          const marker = new atlas.HtmlMarker({
+            position: lngLat, 
+            color: '#dc3545'
+          });
+          const popup = new atlas.Popup({
+            content: `<div class="text-center" style="width: 220px; height: auto; padding: 15px; color: #ffffff; background-color: #378251; border-radius: 5px;">
+              <div class="container-fluid text-center">
+                <img src="${event.imgUrl}" width="150" class="mb-3" style="object-fit: cover; border-radius: 5px;">
+              </div>
+              <strong>${event.title}</strong><br>
+              <br>
+      <button style="background-color: #378251;border: 1px solid;" class="btn btn-sm btn-primary mt-2" type="button" (click)="openModal(event)">Book</button>
+            </div>`, // Customize popup content
+            position: [lngLat[0], lngLat[1] + 0.050]
+          });
+          // Add the marker to the map
+          map.markers.add(marker);
+          marker.getElement().addEventListener('click', () => {
+            // Open or close the popup on click
+            if (popup.isOpen()) {  // Call isOpen() method
+              popup.close();
+            } else {
+              popup.open(map);
+            }
+          });
+        }
+      });
+    } else {
+      const coordinates = selectedEvent?.coordinates; 
+        if (coordinates && coordinates.length === 2) {
+          const lngLat = [coordinates[1], coordinates[0]]; // Reverse to [lon, lat]
       
-    //       // Create a marker for the event
-    //       const marker = new atlas.HtmlMarker({
-    //         position: lngLat, // Use the correctly ordered lngLat
-    //         color: '#dc3545'
-    //       });
-    //       const popup = new atlas.Popup({
-    //         content: `<div class="text-center" style="width: 220px; height: auto; padding: 15px; color: #ffffff; background-color: #378251; border-radius: 5px;">
-    //           <div class="container-fluid text-center">
-    //             <img src="${selectedEvent?.imgUrl}" width="150" class="mb-3" style="object-fit: cover; border-radius: 5px;">
-    //           </div>
-    //           <strong>${selectedEvent?.title}</strong><br>Contact No.: ${selectedEvent?.contact}
-    //         </div>`, // Customize popup content
-    //         position: [lngLat[0], lngLat[1] + 0.050]
-    //       });
-    //       // Add the marker to the map
-    //       map.markers.add(marker);
-    //       marker.getElement().addEventListener('click', () => {
-    //         // Open or close the popup on click
-    //         if (popup.isOpen()) {  // Call isOpen() method
-    //           popup.close();
-    //         } else {
-    //           popup.open(map);
-    //         }
-    //       });
-    //     }
-    // }
+          // Create a marker for the event
+          const marker = new atlas.HtmlMarker({
+            position: lngLat, // Use the correctly ordered lngLat
+            color: '#dc3545'
+          });
+          const popup = new atlas.Popup({
+            content: `<div class="text-center" style="width: 220px; height: auto; padding: 15px; color: #ffffff; background-color: #378251; border-radius: 5px;">
+              <div class="container-fluid text-center">
+                <img src="${selectedEvent?.imgUrl}" width="150" class="mb-3" style="object-fit: cover; border-radius: 5px;">
+              </div>
+              <strong>${selectedEvent?.title}</strong><br>
+            </div>`, // Customize popup content
+            position: [lngLat[0], lngLat[1] + 0.050]
+          });
+          // Add the marker to the map
+          map.markers.add(marker);
+          marker.getElement().addEventListener('click', () => {
+            // Open or close the popup on click
+            if (popup.isOpen()) {  // Call isOpen() method
+              popup.close();
+            } else {
+              popup.open(map);
+            }
+          });
+        }
+    }
   }
 }
